@@ -1,0 +1,80 @@
+# This configuration file allows our pre-commit hooks to be used with pre-commit: http://pre-commit.com/
+
+- id: terraform_fmt
+  name: Terraform fmt
+  description: Rewrites all Terraform configuration files to a canonical format.
+  entry: hooks/terraform_fmt.sh
+  language: script
+  files: (\.tf|\.tfvars)$
+  exclude: \.terraform\/.*$
+
+- id: terraform_docs
+  name: Terraform docs
+  description: Inserts input and output documentation into README.md (using terraform-docs).
+  require_serial: true
+  entry: hooks/terraform_docs.sh
+  language: script
+  files: (\.tf)$
+  exclude: \.terraform\/.*$
+
+- id: terraform_validate
+  name: Terraform validate
+  description: Validates all Terraform configuration files.
+  require_serial: true
+  entry: hooks/terraform_validate.sh
+  language: script
+  files: (\.tf|\.tfvars)$
+  exclude: \.terraform\/.*$
+
+- id: terraform_tflint
+  name: Terraform validate with tflint
+  description: Validates all Terraform configuration files with TFLint.
+  entry: hooks/terraform_tflint.sh
+  language: script
+  files: (\.tf|\.tfvars)$
+  exclude: \.terraform\/.*$
+
+- id: terraform_tfsec
+  name: Terraform validate with tfsec
+  description: Static analysis of Terraform templates to spot potential security issues.
+  entry: hooks/terraform_tfsec.sh
+  language: script
+
+- id: checkov
+  name: Checkov
+  description: Runs checkov on Terraform templates.
+  entry: checkov -d .
+  language: python
+  pass_filenames: false
+  always_run: false
+  files: \.tf$
+  exclude: \.+.terraform\/.*$
+  require_serial: true
+
+- id: terrascan
+  name: terrascan
+  description: Runs terrascan on Terraform templates.
+  language: script
+  entry: hooks/terrascan.sh
+
+- id: shellcheck
+  name: Shellcheck Bash Linter
+  description: Performs linting on bash scripts
+  entry: hooks/shellcheck.sh
+  language: script
+
+- id: helmlint
+  name: helmlint
+  description: Run helm lint, a linter for helm charts
+  entry: hooks/helmlint.sh
+  language: script
+  files: \.((ya?ml)|(tpl))$
+  require_serial: true
+
+- id: markdown-link-check
+  name: markdown-link-check
+  description: Run markdown-link-check to check all the relative and absolute links in markdown docs.
+  entry: hooks/mdlink-check.sh
+  language: script
+  files: \.md$
+  exclude: vendor\/.*$
