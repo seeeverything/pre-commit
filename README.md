@@ -41,3 +41,8 @@ Depend on the hook you want to use you'll need some dependencies, below all depe
 * [`checkov`](https://github.com/bridgecrewio/checkov) required for `checkov` hook.
 * [`terrascan`](https://github.com/accurics/terrascan) required for `terrascan` hook.
 
+## Credits
+
+Most of the hooks in these repo are based on:
+- https://github.com/gruntwork-io/pre-commit
+- https://github.com/antonbabenko/pre-commit-terraform
