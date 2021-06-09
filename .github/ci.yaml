@@ -26,3 +26,17 @@ jobs:
           push: true
           tags: seeeverything/pre-commit:terraform-0.15
           build-args: TERRAFORM_VERSION=0.15.4
+  bump-version:
+    needs: [docker]
+    name: bump-version
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2     
+    - name: bump-version
+      uses: seeeverything/github-tag-action@1.35.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.DEVOPSBOT_GITHUB_TOKEN }}
+        BRANCH: master
+        DEFAULT_BUMP: patch
