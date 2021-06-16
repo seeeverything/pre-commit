@@ -9,7 +9,7 @@ ARG CHECKOV_VERSION="1.0.838"
 ARG TERRASCAN_VERISON="1.6.0"
 
 # Install general dependencies
-RUN apk add --no-cache curl git gawk unzip gnupg bash
+RUN apk add --no-cache curl git gawk unzip gnupg bash openssh
 
 # Install tools
 RUN pip install pre-commit==${PRE_COMMIT_VERSION} && \
